@@ -12,21 +12,21 @@ on:
       nobara_release:
         description: 'Nobara release to build'
         required: true
-        default: 39
+        default: '41'
         type: number
 
       kickstart_path:
         description: 'Path to the kickstart file'
         required: true
-        default: './ISO-ready-flattened-kickstarts/39/flat-nobara-live-official-39.ks'
+        default: './ISO-ready-flattened-kickstarts/41/nv-flat-nobara-live-official-41.ks'
         type: string
 
 jobs:
 
   nobara-build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     container:
-      image: "nobara:${{ inputs.nobara_release }}"
+      image: "nobara:${{inputs.nobara_release}}"
         # --privileged needed for livemedia-creator
       options: --privileged
     steps:
@@ -52,7 +52,7 @@ jobs:
             --make-iso \
             --iso-only \
             --squashfs-only \
-            --iso-name Nobara-39-Official-$(date +%F).iso \
+            --iso-name Nobara-Nvidia-Official-$(date +%F).iso \
             --project Nobara \
             --volid "Nobara-${{ inputs.nobara_release }}" \
             --releasever "${{ inputs.nobara_release }}" \
@@ -61,8 +61,8 @@ jobs:
       - name: Upload ISO
         uses: actions/upload-artifact@v4.3.1
         with:
-          name: "Nobara-39-Official-${{ inputs.nobara_release }}.iso"
-          path: ./Results/Nobara-39-Official.iso
+          name: "Nobara-Nvidia-Official-${{inputs.nobara_release}}.iso"
+          path: ./Results/*.iso
           overwrite: True
 
       ## Capture debug info if run fails, AND logs exist:
