@@ -26,7 +26,7 @@ jobs:
   nobara-build:
     runs-on: ubuntu-24.04
     container:
-      image: "nobara:${{inputs.nobara_release}}"
+      image: "fedora:${{inputs.nobara_release}}"
         # --privileged needed for livemedia-creator
       options: --privileged
     steps:
